@@ -11,6 +11,8 @@ import EditProfile from '../screens/editProfile';
 import OnboardingScreen from '../screens/OnboardingScreen';
 import HabitList from '../screens/HabitList';
 import CreateHabit from '../screens/CreateHabit';
+import HabitDetailScreen from '../screens/Habitdetails';
+import CreateTask from '../screens/CreateTask';
 
 const Stack = createNativeStackNavigator();
 
@@ -55,11 +57,41 @@ function AppContainer() {
           }}
         />
 
-<Stack.Screen
+        <Stack.Screen
           name="CreateHabit"
           component={CreateHabit}
           options={{
             headerTitle: 'Create Habit',
+            headerShadowVisible: false,
+            headerStyle: {
+              backgroundColor: colors.white,
+            },
+            headerTitleAlign: 'center',
+            headerTitleStyle: {fontSize: 18, fontFamily: 'Poppins-SemiBold'},
+            headerLeft: () => <HeaderLeft navigation={navigationRef} />,
+          }}
+        />
+
+        <Stack.Screen
+          name="CreateTask"
+          component={CreateTask}
+          options={{
+            headerTitle: 'Create Task',
+            headerShadowVisible: false,
+            headerStyle: {
+              backgroundColor: colors.white,
+            },
+            headerTitleAlign: 'center',
+            headerTitleStyle: {fontSize: 18, fontFamily: 'Poppins-SemiBold'},
+            headerLeft: () => <HeaderLeft navigation={navigationRef} />,
+          }}
+        />
+
+        <Stack.Screen
+          name="HabitDetail"
+          component={HabitDetailScreen}
+          options={{
+            headerTitle: 'Tasks',
             headerShadowVisible: false,
             headerStyle: {
               backgroundColor: colors.white,

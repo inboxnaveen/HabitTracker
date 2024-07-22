@@ -72,16 +72,22 @@ const Progress = props => {
     },
   };
 
+  // Get today's date
+  const today = new Date();
+  const formattedDate = `${String(today.getDate()).padStart(2, '0')}-${String(
+    today.getMonth() + 1,
+  ).padStart(2, '0')}-${today.getFullYear()}`;
+
   const FirstRoute = () => (
     <View style={{flex: 1, backgroundColor: '#f9f9f9f'}}>
       <ScrollView nestedScrollEnabled style={styles.container}>
         <View style={styles.cardView}>
           <View>
-            <Text style={styles.barsubhead}>This Week</Text>
-            <Text style={styles.barhead}>Jul 21 - Jul 27</Text>
+            <Text style={styles.barsubhead}>Today</Text>
+            <Text style={styles.barhead}>{formattedDate}</Text>
           </View>
 
-          <View style={{flexDirection: 'row'}}>
+          {/* <View style={{flexDirection: 'row'}}>
             <TouchableOpacity style={{marginRight: 10}} activeOpacity={0.8}>
               <Icon
                 name="chevron-back"
@@ -92,7 +98,7 @@ const Progress = props => {
             <TouchableOpacity activeOpacity={0.8}>
               <Icon name="chevron-forward" size={30} color={colors.Grey} />
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
         <View
           style={{
@@ -124,13 +130,19 @@ const Progress = props => {
             withHorizontalLabels={false} // Hide x-axis labels
           />
         </View>
-        <View style={{flexDirection:"row",justifyContent:"space-between",gap:10,marginHorizontal:20,}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            gap: 10,
+            marginHorizontal: 20,
+          }}>
+          {/* <View style={styles.subCardView}>
+            <Text style={styles.subcardhead}>2</Text>
+            <Text style={styles.subcardTxt}>Best streak days</Text>
+          </View> */}
           <View style={styles.subCardView}>
             <Text style={styles.subcardhead}>5</Text>
-            <Text style={styles.subcardTxt}>Best streak days</Text>
-          </View>
-          <View style={styles.subCardView}>
-            <Text style={styles.subcardhead}>15</Text>
             <Text style={styles.subcardTxt}>Habits done</Text>
           </View>
         </View>
@@ -140,11 +152,11 @@ const Progress = props => {
 
   const SecondRoute = () => (
     <View style={{flex: 1, backgroundColor: '#f9f9f9f'}}>
-        <ScrollView nestedScrollEnabled style={styles.container}>
+      <ScrollView nestedScrollEnabled style={styles.container}>
         <View style={styles.cardView}>
           <View>
-            <Text style={styles.barsubhead}>This Month</Text>
-            <Text style={styles.barhead}>Jul 1 - Jul 31</Text>
+            <Text style={styles.barsubhead}>This Week</Text>
+            <Text style={styles.barhead}>Jul 21 - Jul 27</Text>
           </View>
 
           <View style={{flexDirection: 'row'}}>
@@ -190,13 +202,19 @@ const Progress = props => {
             withHorizontalLabels={false} // Hide x-axis labels
           />
         </View>
-        <View style={{flexDirection:"row",justifyContent:"space-between",gap:10,marginHorizontal:20,}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            gap: 10,
+            marginHorizontal: 20,
+          }}>
           <View style={styles.subCardView}>
-            <Text style={styles.subcardhead}>10</Text>
+            <Text style={styles.subcardhead}>4</Text>
             <Text style={styles.subcardTxt}>Best streak days</Text>
           </View>
           <View style={styles.subCardView}>
-            <Text style={styles.subcardhead}>20</Text>
+            <Text style={styles.subcardhead}>15</Text>
             <Text style={styles.subcardTxt}>Habits done</Text>
           </View>
         </View>
@@ -206,14 +224,14 @@ const Progress = props => {
 
   const ThirdRoute = () => (
     <View style={{flex: 1, backgroundColor: '#f9f9f9f'}}>
-       <ScrollView nestedScrollEnabled style={styles.container}>
+      <ScrollView nestedScrollEnabled style={styles.container}>
         <View style={styles.cardView}>
           <View>
-            <Text style={styles.barsubhead}>This Year</Text>
-            <Text style={styles.barhead}>Jan 1 - Dec 31</Text>
+            <Text style={styles.barsubhead}>Overall</Text>
+            {/* <Text style={styles.barhead}>Jan 1 - Dec 31</Text> */}
           </View>
 
-          <View style={{flexDirection: 'row'}}>
+          {/* <View style={{flexDirection: 'row'}}>
             <TouchableOpacity style={{marginRight: 10}} activeOpacity={0.8}>
               <Icon
                 name="chevron-back"
@@ -224,7 +242,7 @@ const Progress = props => {
             <TouchableOpacity activeOpacity={0.8}>
               <Icon name="chevron-forward" size={30} color={colors.Grey} />
             </TouchableOpacity>
-          </View>
+          </View> */}
         </View>
         <View
           style={{
@@ -256,7 +274,13 @@ const Progress = props => {
             withHorizontalLabels={false} // Hide x-axis labels
           />
         </View>
-        <View style={{flexDirection:"row",justifyContent:"space-between",gap:10,marginHorizontal:20,}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            gap: 10,
+            marginHorizontal: 20,
+          }}>
           <View style={styles.subCardView}>
             <Text style={styles.subcardhead}>29</Text>
             <Text style={styles.subcardTxt}>Best streak days</Text>
@@ -333,9 +357,9 @@ const Progress = props => {
 
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    {key: 'first', title: 'Weekly'},
-    {key: 'second', title: 'Monthly'},
-    {key: 'third', title: 'Yearly'},
+    {key: 'first', title: 'Today'},
+    {key: 'second', title: 'Weekly'},
+    {key: 'third', title: 'Overall'},
   ]);
 
   return (
@@ -404,9 +428,9 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
     alignItems: 'center',
-    backgroundColor:"#5F6CE21A",
-    borderRadius:12,
-    flex:1,
+    backgroundColor: '#5F6CE21A',
+    borderRadius: 12,
+    flex: 1,
   },
   subcardhead: {
     fontSize: 25,

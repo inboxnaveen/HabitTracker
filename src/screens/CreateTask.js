@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   BackHandler,
   Alert,
+  ScrollView,
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -25,7 +26,7 @@ import {APPLICATION_STRINGS, colors} from '../utils';
 import {validateEmail} from '../utils/CommonFunctions';
 import Slider from '@react-native-community/slider';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import moment from 'moment';
+import moment, { min } from 'moment';
 
 const CreateHabit = props => {
   const {navigation} = props;
@@ -47,9 +48,24 @@ const CreateHabit = props => {
   const [showLoader, setLoader] = useState(false);
 
   const [habitName, setHabitName] = useState('');
+  const [minTime, setMinTime] = useState('');
+  const [maxTime, setMaxTime] = useState('');
 
+  const [frequency, setFrequency] = useState('Daily');
+  const [selectedDays, setSelectedDays] = useState([]);
+  const [daysPerWeek, setDaysPerWeek] = useState(1);
 
-  const [dateParam, setDateParam] = useState('Select Time');
+  const daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+  const toggleDay = day => {
+    setSelectedDays(prevDays =>
+      prevDays.includes(day)
+        ? prevDays.filter(d => d !== day)
+        : [...prevDays, day],
+    );
+  };
+
+  const [dateParam, setDateParam] = useState('');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   // showing datepicker
@@ -75,11 +91,14 @@ const CreateHabit = props => {
         <Loader />
       ) : (
         <View style={styles.container}>
+          <ScrollView contentContainerStyle={{flexGrow:1,}}>
+
+        
           <View style={styles.fieldscontainer}>
-            <Text style={styles.labeltext}>What do you want to do?</Text>
+            <Text style={styles.labeltext}>Task Name</Text>
             <TextInput
               style={[styles.input]}
-              placeholder="Name of Habit"
+              placeholder="Name of Task"
               placeholderTextColor={colors.Grey}
               onChangeText={value => {
                 setHabitName(value);
@@ -89,11 +108,120 @@ const CreateHabit = props => {
               caretHidden={false}
               mode="outlined"
               activeOutlineColor={colors.secondaryColor}
-              outlineColor={'transparent'}
+              outlineColor={colors.Grey}
               outlineStyle={{borderRadius: 12, borderWidth: 1}}
             />
           </View>
-        
+          <View style={styles.fieldscontainer}>
+
+          <TextInput
+              style={[styles.input]}
+              placeholder="Min Time"
+              placeholderTextColor={colors.Grey}
+              onChangeText={value => {
+                setMinTime(value);
+              }}
+              value={minTime}
+              cursorColor={colors.black}
+              caretHidden={false}
+              mode="outlined"
+              activeOutlineColor={colors.secondaryColor}
+              outlineColor={colors.Grey}
+              outlineStyle={{borderRadius: 12, borderWidth: 1}}
+            />
+            </View>
+            <View style={styles.fieldscontainer}>
+            <TextInput
+              style={[styles.input]}
+              placeholder="Max Time"
+              placeholderTextColor={colors.Grey}
+              onChangeText={value => {
+                setMaxTime(value);
+              }}
+              value={maxTime}
+              cursorColor={colors.black}
+              caretHidden={false}
+              mode="outlined"
+              activeOutlineColor={colors.secondaryColor}
+              outlineColor={colors.Grey}
+              outlineStyle={{borderRadius: 12, borderWidth: 1}}
+            />
+            </View>
+          <View style={styles.fieldscontainer}>
+            <Text style={styles.title}>Settings</Text>
+
+            <Text style={styles.labeltext}>Repeat habit</Text>
+            <View style={styles.buttonGroup}>
+              <TouchableOpacity
+                onPress={() => setFrequency('Daily')}
+                style={[
+                  styles.button,
+                  frequency === 'Daily' && styles.activeButton,
+                ]}>
+                <Text style={styles.buttonText}>Daily</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setFrequency('Weekly')}
+                style={[
+                  styles.button,
+                  frequency === 'Weekly' && styles.activeButton,
+                ]}>
+                <Text style={styles.buttonText}>Weekly</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setFrequency('Monthly')}
+                style={[
+                  styles.button,
+                  frequency === 'Monthly' && styles.activeButton,
+                ]}>
+                <Text style={styles.buttonText}>Monthly</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => setFrequency('Every x days')}
+                style={[
+                  styles.button,
+                  frequency === 'Every x days' && styles.activeButton,
+                ]}>
+                <Text style={styles.buttonText}>Every x days</Text>
+              </TouchableOpacity>
+            </View>
+
+            {frequency === 'Weekly' && (
+              <View style={styles.daySelector}>
+                <Text style={styles.subtitle}>On these days</Text>
+                <View style={styles.days}>
+                  {daysOfWeek.map((day, index) => (
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => toggleDay(day)}
+                      style={[
+                        styles.dayButton,
+                        selectedDays.includes(day) && styles.activeDayButton,
+                      ]}>
+                      <Text style={styles.dayButtonText}>{day}</Text>
+                    </TouchableOpacity>
+                  ))}
+                </View>
+              </View>
+            )}
+
+            {frequency === 'Every x days' && (
+              <View style={styles.sliderContainer}>
+                <Text style={styles.subtitle}>{daysPerWeek} days per week</Text>
+                <Slider
+                  style={styles.slider}
+                  minimumValue={1}
+                  maximumValue={7}
+                  step={1}
+                  value={daysPerWeek}
+                  onValueChange={value => setDaysPerWeek(value)}
+                  minimumTrackTintColor="#C0C4FF"
+                  maximumTrackTintColor="#E0E4FF"
+                  thumbTintColor={colors.secondaryColor}
+                />
+              </View>
+            )}
+          </View>
 
           <View style={styles.fieldscontainer}>
             <Text style={styles.labeltext}>Remainder</Text>
@@ -126,6 +254,7 @@ const CreateHabit = props => {
             onConfirm={handleConfirm}
             onCancel={hideDatePicker}
           />
+            </ScrollView>
         </View>
       )}
     </SafeAreaView>
@@ -159,10 +288,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   btnStyle: {
-    position: 'absolute',
-    bottom: 25,
-    left: 0,
-    right: 0,
+    // position: 'absolute',
+    // bottom: 25,
+    // left: 0,
+    // right: 0,
   },
   fieldscontainer: {
     marginHorizontal: 20,

@@ -281,8 +281,7 @@ const EditProfile = props => {
             statusBarTranslucent={true}
             visible={imgModalVisibility}
             onRequestClose={() => {
-              Alert.alert('Modal has been closed.');
-              setModalVisible(!imgModalVisibility);
+              setImgModalVisibility(!imgModalVisibility);
             }}>
             <View style={styles.modalBg}>
               <View style={styles.modalViewBg}>

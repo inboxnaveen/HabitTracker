@@ -195,7 +195,7 @@ const SignUp = props => {
                     disabled={false}
                     value={toggleCheckBox}
                     onValueChange={newValue => setToggleCheckBox(newValue)}
-                    tintColors={{true: '#101C42', false: colors.borderColor}}
+                    tintColors={{true: colors.secondaryColor, false: colors.borderColor}}
                   />
                   <Text style={[styles.rememberText, {marginTop: 3, flex: 1}]}>
                     By creating an account you have to agree with our terms &

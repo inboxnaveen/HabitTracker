@@ -65,7 +65,7 @@ const CreateHabit = props => {
     );
   };
 
-  const [dateParam, setDateParam] = useState('');
+  const [dateParam, setDateParam] = useState('Select Time');
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   // showing datepicker

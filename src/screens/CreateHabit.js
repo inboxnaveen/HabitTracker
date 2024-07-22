@@ -32,11 +32,6 @@ const CreateHabit = props => {
 
   useEffect(() => {
     const focusHandler = navigation.addListener('focus', () => {
-      setHabitName('');
-      setFrequency('Daily');
-      setSelectedDays([]);
-      setDaysPerWeek(1);
-      setDateParam('');
     });
 
     return () => {

@@ -28,7 +28,7 @@ const OnBoarding = props => {
     const backAction = () => {
       Alert.alert(
         'Hold on!',
-        'Are you sure you want to Exit from Optisych Care?',
+        'Are you sure you want to Exit from HabitTracker Care?',
         [
           {
             text: 'Cancel',
